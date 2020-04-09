@@ -55,7 +55,6 @@ class OauthDB {
       vals.canGrant,
       vals.publicClient,
       vals.userId,
-      vals.email,
       vals.scope,
       vals.profileChangedAt,
       vals.expiresAt,

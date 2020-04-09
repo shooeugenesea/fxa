@@ -2,8 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-const ScopeSet = require('../../../fxa-shared').oauth.scopes;
-
 const AppError = require('./error');
 const config = require('../../config');
 const db = require('./db');
@@ -13,8 +11,6 @@ const JWTAccessToken = require('./jwt_access_token');
 const validators = require('./validators');
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-
-const SCOPES_REQUIRING_EMAIL = ScopeSet.fromArray(['profile:email', 'oauth']);
 
 /**
  * Get the tokenId stored in the DB for `accessToken`
@@ -84,10 +80,6 @@ exports.verify = async function verify(accessToken) {
 
   if (token.profileChangedAt) {
     tokenInfo.profile_changed_at = token.profileChangedAt;
-  }
-
-  if (token.scope.intersects(SCOPES_REQUIRING_EMAIL)) {
-    tokenInfo.email = token.email;
   }
 
   return tokenInfo;

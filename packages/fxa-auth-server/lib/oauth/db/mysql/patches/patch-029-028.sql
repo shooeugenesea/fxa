@@ -1,0 +1,13 @@
+-- ALTER TABLE codes
+-- ADD COLUMN email VARCHAR(256) NOT NULL AFTER userId,
+-- ALGORITHM = INPLACE, LOCK = NONE;
+
+-- ALTER TABLE refreshTokens
+-- ADD COLUMN email VARCHAR(256) NOT NULL AFTER userId,
+-- ALGORITHM = INPLACE, LOCK = NONE;
+
+-- ALTER TABLE tokens
+-- ADD COLUMN email VARCHAR(256) NOT NULL AFTER userId,
+-- ALGORITHM = INPLACE, LOCK = NONE;
+
+-- UPDATE dbMetadata SET value = '28' WHERE name = 'schema-patch-level';
