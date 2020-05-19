@@ -70,15 +70,19 @@ suite.tests['blockingRules'] = function () {
 
   config.set('surveys', []);
   assert.include(frameSrc, "'none'");
-  config.set('surveys', [
+  config.set('surveys', {
+    enabled: true,
+    doNotBotherSpan: 2592000000,
+    surveys: [
       {
         id: 'portugese-speaking-mobile-users-in-southern-hemisphere',
-        conditions: {},
+        conditions: {relier: () => null},
         view: 'settings',
         rate: 0.1,
         url: 'https://www.surveygizmo.com/s3/5541940/pizza',
       }
-  ]);
+    ]
+  });
   frameSrc = blockingRules(config).directives.frameSrc;
   const SURVEYS = config.get('surveys');
   assert.lengthOf(frameSrc, SURVEYS.length + 1);
