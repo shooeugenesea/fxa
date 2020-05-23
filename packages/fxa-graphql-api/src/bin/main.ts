@@ -8,6 +8,7 @@ import { Container } from 'typedi';
 import express from 'express';
 import mozlog from 'mozlog';
 import FxAccountClient from 'fxa-js-client';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 import { configContainerToken, loggerContainerToken, fxAccountClientToken } from '../lib/constants';
 import { setupAuthDatabase, setupProfileDatabase } from '../lib/db';
@@ -45,6 +46,7 @@ async function run() {
   }
 
   const app = express();
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000 }));
   const server = await createServer(config, logger);
   server.applyMiddleware({ app });
 

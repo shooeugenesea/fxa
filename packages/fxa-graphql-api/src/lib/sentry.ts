@@ -56,25 +56,12 @@ export function configureSentry(options?: Sentry.NodeOptions) {
  * @param debug Debug mode or not
  * @param error
  */
-export function reportGraphQLError(debug: boolean, logger: Logger, error: GraphQLError) {
-  if (debug) {
-    return error;
-  }
-
-  if (error.name === 'ValidationError') {
-    return new Error('Request error');
-  }
-
+export function reportGraphQLError(error: GraphQLError) {
   const graphPath = error.path?.join('.');
-
-  logger.error('graphql', { path: graphPath, error: error.originalError?.message });
-
   Sentry.withScope(scope => {
     scope.setContext('graphql', {
       path: graphPath,
     });
     Sentry.captureException(error.originalError);
   });
-
-  return new Error('Internal server error');
 }

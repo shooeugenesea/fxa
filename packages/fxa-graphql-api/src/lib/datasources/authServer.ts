@@ -52,4 +52,20 @@ export class AuthServerSource extends DataSource {
     const result = await this.authClient.recoveryKeyExists(this.token);
     return result.exists;
   }
+
+  public recoveryEmailCreate(email: string): Promise<any> {
+    return this.authClient.recoveryEmailCreate(this.token, email);
+  }
+
+  public recoveryEmailDestroy(email: string): Promise<any> {
+    return this.authClient.recoveryEmailDestroy(this.token, email);
+  }
+
+  public recoveryEmailSetPrimaryEmail(email: string): Promise<any> {
+    return this.authClient.recoveryEmailSetPrimaryEmail(this.token, email);
+  }
+
+  public recoveryEmailSecondaryResendCode(email: string): Promise<any> {
+    return this.authClient.recoveryEmailSecondaryResendCode(this.token, email);
+  }
 }

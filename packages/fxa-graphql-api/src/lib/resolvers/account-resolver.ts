@@ -2,20 +2,93 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+import { ApolloError } from 'apollo-server';
+import getStream from 'get-stream';
 import { GraphQLResolveInfo } from 'graphql';
 import {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType,
 } from 'graphql-parse-resolve-info';
-import { Ctx, Query, Resolver, FieldResolver, Root, Info } from 'type-graphql';
+import { Ctx, Query, Resolver, FieldResolver, Root, Info, Mutation, Arg } from 'type-graphql';
 
 import { accountByUid, Account, AccountOptions } from '../db/models/auth';
 import { profileByUid, selectedAvatar } from '../db/models/profile';
 import { Context } from '../server';
+
 import { Account as AccountType } from './types/account';
+import { UpdateAvatarInput, EmailInput, UpdateDisplayNameInput } from './types/input';
+import { BasicPayload, UpdateAvatarPayload, UpdateDisplayNamePayload } from './types/payload';
 
 @Resolver(of => AccountType)
 export class AccountResolver {
+  @Mutation(returns => UpdateDisplayNamePayload, { description: 'Update the display name.' })
+  public async updateDisplayName(
+    @Ctx() context: Context,
+    @Arg('input', type => UpdateDisplayNameInput) input: UpdateDisplayNameInput
+  ): Promise<UpdateDisplayNamePayload> {
+    const result = await context.dataSources.profileAPI.updateDisplayName(input.displayName);
+    return {
+      clientMutationId: input.clientMutationId,
+      displayName: result ? input.displayName : undefined,
+    };
+  }
+
+  @Mutation(returns => UpdateAvatarPayload, { description: 'Update the avatar in use.' })
+  public async updateAvatar(
+    @Ctx() context: Context,
+    @Arg('input', type => UpdateAvatarInput) input: UpdateAvatarInput
+  ): Promise<UpdateAvatarPayload> {
+    const file = await input.file;
+    const fileData = await getStream.buffer(file.createReadStream());
+    const avatarUrl = await context.dataSources.profileAPI.avatarUpload(file.mimetype, fileData);
+    return { clientMutationId: input.clientMutationId, avatarUrl };
+  }
+
+  @Mutation(returns => BasicPayload, {
+    description: 'Create a secondary email for the signed in account.',
+  })
+  public async createSecondaryEmail(
+    @Ctx() context: Context,
+    @Arg('input', type => EmailInput) input: EmailInput
+  ): Promise<BasicPayload> {
+    await context.dataSources.authAPI.recoveryEmailCreate(input.email);
+    return { clientMutationId: input.clientMutationId };
+  }
+
+  @Mutation(returns => BasicPayload, {
+    description: 'Remove the secondary email for the signed in account.',
+  })
+  public async deleteSecondaryEmail(
+    @Ctx() context: Context,
+    @Arg('input', type => EmailInput) input: EmailInput
+  ): Promise<BasicPayload> {
+    await context.dataSources.authAPI.recoveryEmailDestroy(input.email);
+    return { clientMutationId: input.clientMutationId };
+  }
+
+  @Mutation(returns => BasicPayload, {
+    description:
+      'Change users primary email address, this email address must belong to the user and be verified.',
+  })
+  public async updatePrimaryEmail(
+    @Ctx() context: Context,
+    @Arg('input', type => EmailInput) input: EmailInput
+  ): Promise<BasicPayload> {
+    await context.dataSources.authAPI.recoveryEmailSetPrimaryEmail(input.email);
+    return { clientMutationId: input.clientMutationId };
+  }
+
+  @Mutation(returns => BasicPayload, {
+    description: 'Reset the verification code to a secondary email.',
+  })
+  public async resendSecondaryEmailCode(
+    @Ctx() context: Context,
+    @Arg('input', type => EmailInput) input: EmailInput
+  ): Promise<BasicPayload> {
+    await context.dataSources.authAPI.recoveryEmailSecondaryResendCode(input.email);
+    return { clientMutationId: input.clientMutationId };
+  }
+
   @Query(returns => AccountType, { nullable: true })
   public account(@Ctx() context: Context, @Info() info: GraphQLResolveInfo) {
     context.logger.info('account', { uid: context.authUser });
