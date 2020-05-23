@@ -1,4 +1,4 @@
-declare module 'fxa-jwtool' {
+declare module "fxa-jwtool" {
   export = fxa_jwtool;
 }
 
@@ -177,7 +177,7 @@ declare namespace fxa_jwtool {
 
   type PublicKeyType = {
     e: string;
-    'fxa-createdAt'?: number;
+    "fxa-createdAt"?: number;
     kty: string;
     kid?: string;
     n: string;

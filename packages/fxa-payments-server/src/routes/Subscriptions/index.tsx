@@ -32,7 +32,7 @@ import AlertBar from '../../components/AlertBar';
 import DialogMessage from '../../components/DialogMessage';
 import FetchErrorDialogMessage from '../../components/FetchErrorDialogMessage';
 import { LoadingOverlay } from '../../components/LoadingOverlay';
-import { ReactComponent as CloseIcon } from '@fxa-react/images/close.svg';
+import { ReactComponent as CloseIcon } from 'fxa-react/images/close.svg';
 import { getLocalizedDate, getLocalizedDateString } from '../../lib/formats';
 
 export type SubscriptionsProps = {
@@ -323,7 +323,7 @@ const customerSubscriptionForId = (
   customerSubscriptions: CustomerSubscription[]
 ): CustomerSubscription | null =>
   customerSubscriptions.filter(
-    subscription => subscription.subscription_id === subscriptionId
+    (subscription) => subscription.subscription_id === subscriptionId
   )[0];
 
 const subscriptionForId = (
@@ -331,11 +331,11 @@ const subscriptionForId = (
   subscriptions: Subscription[]
 ): Subscription | null =>
   subscriptions.filter(
-    subscription => subscription.subscriptionId === subscriptionId
+    (subscription) => subscription.subscriptionId === subscriptionId
   )[0];
 
 const planForId = (planId: string, plans: Plan[]): Plan | null =>
-  plans.filter(plan => plan.plan_id === planId)[0];
+  plans.filter((plan) => plan.plan_id === planId)[0];
 
 type CancellationDialogMessageProps = {
   subscription: Subscription;

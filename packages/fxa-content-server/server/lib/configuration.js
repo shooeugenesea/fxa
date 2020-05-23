@@ -10,7 +10,7 @@ const path = require('path');
 
 const versionInfo = require('./version');
 
-const DEFAULT_SUPPORTED_LANGUAGES = require('../../../fxa-shared').l10n
+const DEFAULT_SUPPORTED_LANGUAGES = require('fxa-shared').l10n
   .supportedLanguages;
 
 const conf = (module.exports = convict({
@@ -814,7 +814,7 @@ if (supportedLanguages.indexOf(defaultLang) === -1) {
 // Static resources are generated for each language in the default supported languages list, at least until issue #1434 is fixed
 const staticallyGeneratedLanguages = conf.default('i18n.supportedLanguages');
 const missingLangs = [];
-supportedLanguages.forEach(function(l) {
+supportedLanguages.forEach(function (l) {
   if (staticallyGeneratedLanguages.indexOf(l) === -1) {
     missingLangs.push(l);
   }

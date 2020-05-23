@@ -29,9 +29,9 @@ const serveStatic = require('serve-static');
 
 const config = require('../lib/configuration');
 const sentry = require('../lib/sentry');
-const { cors, routing } = require('../../../fxa-shared/express')();
+const { cors, routing } = require('fxa-shared/express')();
 
-const userAgent = require('../../../fxa-shared/metrics/user-agent');
+const userAgent = require('fxa-shared/metrics/user-agent');
 if (!userAgent.isToVersionStringSupported()) {
   // npm@3 installs the incorrect version of node-uap, one without `toVersionString`.
   // To ensure the correct version is installed, check toVersionString is available.
@@ -179,7 +179,7 @@ function makeApp() {
   routes.forEach(routeHelpers.addRoute);
 
   if (!config.get('settings.enableBeta')) {
-    app.use('/beta/*', function(req, res) {
+    app.use('/beta/*', function (req, res) {
       res.status(403);
       res.send('<h1>403 Forbidden</h1>');
     });
@@ -269,7 +269,7 @@ function makeHttpRedirectApp() {
   const redirectPort = port === 443 ? '' : ':' + port;
 
   const httpApp = express();
-  httpApp.get('*', function(req, res) {
+  httpApp.get('*', function (req, res) {
     const redirectTo = redirectProtocol + req.host + redirectPort + req.url;
 
     res.redirect(301, redirectTo);

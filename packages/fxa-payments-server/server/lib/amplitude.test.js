@@ -9,13 +9,13 @@ const mockAmplitudeConfig = {
   schemaValidation: true,
   rawEvents: false,
 };
-jest.mock('../../../fxa-shared/metrics/amplitude.js', () => ({
-  ...jest.requireActual('../../../fxa-shared/metrics/amplitude.js'),
+jest.mock('fxa-shared/metrics/amplitude.js', () => ({
+  ...jest.requireActual('fxa-shared/metrics/amplitude.js'),
   validate: mockSchemaValidatorFn,
 }));
 let scope;
 const mockSentry = {
-  withScope: jest.fn().mockImplementation(cb => {
+  withScope: jest.fn().mockImplementation((cb) => {
     scope = { setContext: jest.fn() };
     cb(scope);
   }),
@@ -35,7 +35,7 @@ jest.spyOn(log, 'error').mockImplementation(() => {});
 
 jest.mock('../config', () => ({
   ...jest.requireActual('../config'),
-  get: key => {
+  get: (key) => {
     switch (key) {
       case 'amplitude':
         return mockAmplitudeConfig;

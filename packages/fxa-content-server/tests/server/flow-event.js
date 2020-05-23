@@ -10,7 +10,7 @@ const sinon = require('sinon');
 var config, sandbox, mocks, flowEvent, flowMetricsValidateResult;
 
 registerSuite('flow-event', {
-  beforeEach: function() {
+  beforeEach: function () {
     config = {
       /*eslint-disable camelcase*/
       clientAddressDepth: 3,
@@ -50,12 +50,12 @@ registerSuite('flow-event', {
       './amplitude': mocks.amplitude,
       './configuration': mocks.config,
       './flow-metrics': mocks.flowMetrics,
-      '../../../fxa-shared/express/geo-locate': mocks.geolocate,
+      'fxa-shared/express/geo-locate': mocks.geolocate,
       './statsd': mocks.statsd,
     }).metricsRequest;
   },
 
-  afterEach: function() {
+  afterEach: function () {
     sandbox.restore();
   },
 

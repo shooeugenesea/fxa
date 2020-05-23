@@ -7,11 +7,11 @@
 const flowMetrics = require('../flow-metrics');
 const logger = require('../logging/log')('routes.index');
 
-module.exports = function(config) {
+module.exports = function (config) {
   let featureFlags;
   const featureFlagConfig = config.get('featureFlags');
   if (featureFlagConfig.enabled) {
-    featureFlags = require('../../../../fxa-shared/feature-flags')(
+    featureFlags = require('fxa-shared/feature-flags')(
       featureFlagConfig,
       logger
     );
@@ -79,7 +79,7 @@ module.exports = function(config) {
   return {
     method: 'get',
     path: '/',
-    process: async function(req, res) {
+    process: async function (req, res) {
       const flowEventData = flowMetrics.create(
         FLOW_ID_KEY,
         req.headers['user-agent']

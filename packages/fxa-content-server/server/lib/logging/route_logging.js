@@ -10,7 +10,7 @@
 const logger = require('./log')('server.requests');
 const morgan = require('morgan');
 const config = require('../configuration').getProperties();
-const remoteAddress = require('../../../../fxa-shared/express/remote-address')(
+const remoteAddress = require('fxa-shared/express/remote-address')(
   config.clientAddressDepth
 );
 
@@ -20,7 +20,7 @@ const remoteAddress = require('../../../../fxa-shared/express/remote-address')(
  */
 
 // Used when logging is disabled
-const disabled = function(req, res, next) {
+const disabled = function (req, res, next) {
   next();
 };
 
@@ -50,12 +50,12 @@ const formats = {
     ].join(' '),
 };
 
-module.exports = function() {
+module.exports = function () {
   return config.disable_route_logging
     ? disabled
     : morgan(formats[config.route_log_format], {
         stream: {
-          write: x => {
+          write: (x) => {
             const logBody =
               config.route_log_format === 'dev_fxa' ? x.trim() : JSON.parse(x);
             logger.info('route', logBody);

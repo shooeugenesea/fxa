@@ -9,7 +9,7 @@
 const logger = require('./log')('server.requests');
 const morgan = require('morgan');
 const config = require('../../config');
-const remoteAddress = require('../../../../fxa-shared/express/remote-address')(
+const remoteAddress = require('fxa-shared/express/remote-address')(
   config.get('clientAddressDepth')
 );
 
@@ -50,7 +50,7 @@ module.exports = () => {
   if (enabled) {
     return morgan(formats[format], {
       stream: {
-        write: x => {
+        write: (x) => {
           const logBody = format === 'dev_fxa' ? x.trim() : JSON.parse(x);
           logger.info('route', logBody);
         },
