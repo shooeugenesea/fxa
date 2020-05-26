@@ -2,25 +2,30 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-import React from "react";
+import React from 'react';
 
 type LinkExternalProps = {
   className?: string;
   href: string;
   children: React.ReactNode;
+  title?: string;
 };
 
 export const LinkExternal = ({
   className,
   href,
-  children
+  children,
+  title,
 }: LinkExternalProps) => (
   <a
     data-testid="link-external"
     target="_blank"
     rel="noopener noreferrer"
-    {...{ className }}
-    {...{ href }}
+    {...{
+      className,
+      href,
+      title,
+    }}
   >
     {children}
   </a>
