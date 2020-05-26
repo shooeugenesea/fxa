@@ -1,0 +1,15 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-image {
+  width: 36px;
+  height: 36px;
+  animation: rotate 0.8s linear infinite;
+}

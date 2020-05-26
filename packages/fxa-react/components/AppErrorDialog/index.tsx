@@ -3,12 +3,21 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import React from 'react';
+import './index.scss';
 
-const AppErrorDialog = ({ error: { message } }: { error: Error }) => {
+const AppErrorDialog = ({
+  error,
+  className = '',
+}: {
+  error: Error;
+  className?: string;
+}) => {
   return (
-    <div>
-      <h2 data-testid="error-loading-app">General application error</h2>
-      <p>Something went wrong. Please try again later.</p>
+    <div {...{ className }}>
+      <div className="generic-error">
+        <h2 data-testid="error-loading-app">General application error</h2>
+        <p>Something went wrong. Please try again later.</p>
+      </div>
     </div>
   );
 };
