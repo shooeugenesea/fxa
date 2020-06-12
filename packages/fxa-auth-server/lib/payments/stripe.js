@@ -753,13 +753,19 @@ class StripeHelper {
    * @returns {Promise<Subscription>}
    * @throws {error.paymentFailed}
    */
-  async createSubscription(customer, selectedPlan, idempotencyKey) {
+  async createSubscription(
+    customer,
+    selectedPlan,
+    couponId = '',
+    idempotencyKey
+  ) {
     let subscription;
 
     try {
       subscription = await this.stripe.subscriptions.create(
         {
           customer: customer.id,
+          coupon: couponId,
           items: [{ plan: selectedPlan.plan_id }],
           expand: ['latest_invoice.payment_intent'],
         },

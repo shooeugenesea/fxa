@@ -29,6 +29,7 @@ export default {
   createSubscription: (
     paymentToken: string,
     plan: Plan,
+    couponId: string,
     displayName: string,
     idempotencyKey: string
   ) =>
@@ -39,6 +40,7 @@ export default {
         paymentToken,
         displayName,
         planId: plan.plan_id,
+        couponId: couponId,
         productId: plan.product_id,
         idempotencyKey,
       }),

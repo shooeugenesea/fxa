@@ -70,6 +70,7 @@ export const Product = ({
 
   const isMobile = !useMatchMedia('(min-width: 768px)', matchMediaDefault);
   const planId = queryParams.plan;
+  const couponId = queryParams.coupon;
   const accountActivated = !!queryParams.activated;
 
   // Fetch plans on initial render, change in product ID, or auth change.
@@ -209,6 +210,7 @@ export const Product = ({
             profile: profile.result,
             accountActivated,
             selectedPlan,
+            couponId,
             createSubscriptionAndRefresh,
             createSubscriptionStatus,
             resetCreateSubscription,

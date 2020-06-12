@@ -161,6 +161,7 @@ class DirectStripeRoutes {
 
     const {
       planId,
+      couponId,
       paymentToken,
       displayName,
       idempotencyKey,
@@ -184,6 +185,7 @@ class DirectStripeRoutes {
         displayName,
         paymentToken,
         selectedPlan,
+        couponId,
         idempotencyKey
       );
     } else {
@@ -191,6 +193,7 @@ class DirectStripeRoutes {
         customer,
         paymentToken,
         selectedPlan,
+        couponId,
         idempotencyKey
       );
     }
@@ -252,6 +255,7 @@ class DirectStripeRoutes {
     displayName,
     paymentToken,
     selectedPlan,
+    couponId,
     idempotencyKey
   ) {
     // This method invokes *two* create methods, both of which accept an
@@ -271,6 +275,7 @@ class DirectStripeRoutes {
     return this.stripeHelper.createSubscription(
       customer,
       selectedPlan,
+      couponId,
       idempotencyKey
     );
   }
@@ -288,6 +293,7 @@ class DirectStripeRoutes {
     customer,
     paymentToken,
     selectedPlan,
+    couponId,
     idempotencyKey
   ) {
     if (paymentToken) {
@@ -345,6 +351,7 @@ class DirectStripeRoutes {
     return this.stripeHelper.createSubscription(
       customer,
       selectedPlan,
+      couponId,
       idempotencyKey
     );
   }

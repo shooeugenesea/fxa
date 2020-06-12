@@ -125,6 +125,7 @@ export async function apiCreateSubscription(params: {
   paymentToken: string;
   planId: string;
   productId: string;
+  couponId: string;
   displayName: string;
   idempotencyKey: string;
 }) {

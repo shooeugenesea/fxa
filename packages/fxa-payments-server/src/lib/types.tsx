@@ -4,6 +4,7 @@ export interface QueryParams {
   device_id?: string;
   flow_id?: string;
   flow_begin_time?: number;
+  coupon?: string;
 }
 
 export interface GenericObject {

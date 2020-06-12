@@ -275,6 +275,7 @@ module.exports.recoveryData = isA
 
 module.exports.subscriptionsSubscriptionId = isA.string().max(255);
 module.exports.subscriptionsPlanId = isA.string().max(255);
+module.exports.subscriptionsCouponId = isA.string().max(255);
 module.exports.subscriptionsProductId = isA.string().max(255);
 module.exports.subscriptionsProductName = isA.string().max(255);
 module.exports.subscriptionsPaymentToken = isA.string().max(255);

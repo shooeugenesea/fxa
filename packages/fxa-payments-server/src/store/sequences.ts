@@ -62,11 +62,14 @@ export const fetchCustomerAndSubscriptions = () => async (
 export const createSubscriptionAndRefresh = (
   paymentToken: string,
   plan: Plan,
+  couponId: string,
   displayName: string,
   nonce: string
 ) => async (dispatch: Function) => {
   try {
-    await dispatch(createSubscription(paymentToken, plan, displayName, nonce));
+    await dispatch(
+      createSubscription(paymentToken, plan, couponId, displayName, nonce)
+    );
     await dispatch(fetchCustomerAndSubscriptions());
   } catch (err) {
     handleThunkError(err);

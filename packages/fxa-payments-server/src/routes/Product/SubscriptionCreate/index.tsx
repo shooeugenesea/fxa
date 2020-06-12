@@ -20,6 +20,7 @@ import './index.scss';
 export type SubscriptionCreateProps = {
   accountActivated: boolean;
   selectedPlan: Plan;
+  couponId: string;
   createSubscriptionAndRefresh: ProductProps['createSubscriptionAndRefresh'];
   createSubscriptionStatus: ProductProps['createSubscriptionStatus'];
   resetCreateSubscription: ProductProps['resetCreateSubscription'];
@@ -29,6 +30,7 @@ export type SubscriptionCreateProps = {
 export const SubscriptionCreate = ({
   accountActivated,
   selectedPlan,
+  couponId,
   createSubscriptionAndRefresh: createSubscriptionAndRefreshBase,
   createSubscriptionStatus,
   resetCreateSubscription: resetCreateSubscriptionBase,
@@ -109,6 +111,7 @@ export const SubscriptionCreate = ({
         createSubscriptionAndRefresh(
           tokenResponse.token.id,
           selectedPlan,
+          couponId,
           name,
           idempotencyKey
         );
