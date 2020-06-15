@@ -1129,6 +1129,7 @@ const directRoutes = (
         validate: {
           payload: {
             planId: validators.subscriptionsPlanId.required(),
+            couponId: validators.subscriptionsCouponId.optional(),
             paymentToken: validators.subscriptionsPaymentToken.required(),
             displayName: isA.string().required(),
             idempotencyKey: isA.string().required(),
